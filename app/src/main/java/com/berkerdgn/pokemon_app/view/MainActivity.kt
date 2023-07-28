@@ -6,7 +6,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.berkerdgn.pokemon_app.R
 import com.berkerdgn.pokemon_app.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var _binding : ActivityMainBinding ?= null
@@ -29,6 +31,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+
 
 
     private fun replaceFragment (fragment: Fragment){
