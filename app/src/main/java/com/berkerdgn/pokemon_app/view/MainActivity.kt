@@ -19,27 +19,10 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(3000)
         installSplashScreen()
         _binding = ActivityMainBinding.inflate(layoutInflater)
-        replaceFragment(HomeFragment())
         setContentView(binding.root)
 
 
-        binding.navBar.setOnItemSelectedListener {
-            when (it){
-                R.id.home -> replaceFragment(HomeFragment())
-                R.id.search -> replaceFragment(SearchFragment())
-            }
-            true
-        }
     }
 
-
-
-
-    private fun replaceFragment (fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment)
-        fragmentTransaction.commit()
-
-    }
 
 }

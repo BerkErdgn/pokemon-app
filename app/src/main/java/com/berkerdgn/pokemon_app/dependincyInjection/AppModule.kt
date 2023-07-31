@@ -1,7 +1,6 @@
 package com.berkerdgn.pokemon_app.dependincyInjection
 
 import com.berkerdgn.pokemon_app.api.PokemonApi
-import com.berkerdgn.pokemon_app.model.PokemonResult
 import com.berkerdgn.pokemon_app.repo.PokemonRepository
 import com.berkerdgn.pokemon_app.repo.PokemonRepositoryImpl
 import com.berkerdgn.pokemon_app.util.Util.BASE_URL

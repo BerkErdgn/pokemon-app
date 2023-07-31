@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.berkerdgn.pokemon_app.model.AllPokemonModel
-import com.berkerdgn.pokemon_app.model.PokemonResult
+import com.berkerdgn.pokemon_app.model.for_all_model.AllPokemonModel
 import com.berkerdgn.pokemon_app.repo.PokemonRepository
 import com.berkerdgn.pokemon_app.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel

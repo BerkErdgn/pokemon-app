@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_architecture"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/secondStageFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -30,10 +30,29 @@
         android:id="@+id/detailFragment"
         android:name="com.berkerdgn.pokemon_app.view.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="pokemonName"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/comparisonFragment"
         android:name="com.berkerdgn.pokemon_app.view.ComparisonFragment"
         android:label="fragment_comparison"
         tools:layout="@layout/fragment_comparison" />
+    <fragment
+        android:id="@+id/secondStageFragment"
+        android:name="com.berkerdgn.pokemon_app.view.SecondStageFragment"
+        android:label="fragment_second_stage"
+        tools:layout="@layout/fragment_second_stage" >
+        <action
+            android:id="@+id/action_secondStageFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_secondStageFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_secondStageFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.berkerdgn.pokemon_app.R
-import com.berkerdgn.pokemon_app.model.PokemonResult
+import com.berkerdgn.pokemon_app.model.for_all_model.PokemonResult
+import com.berkerdgn.pokemon_app.view.SecondStageFragmentDirections
 
 
 class PokemonsRecyclerAdapter() : RecyclerView.Adapter<PokemonsRecyclerAdapter.PokemonsRecyclerViewHolder>()  {
@@ -45,6 +47,12 @@ class PokemonsRecyclerAdapter() : RecyclerView.Adapter<PokemonsRecyclerAdapter.P
         val pokemonName = holder.itemView.findViewById<TextView>(R.id.pokemonNameTextView)
         holder.itemView.apply {
             pokemonName.text = pokemons[position].name
+            setOnClickListener {
+                val action =SecondStageFragmentDirections.actionSecondStageFragmentToDetailFragment2(pokemonName = pokemons[position].name)
+                Navigation.findNavController(view = it).navigate(action)
+            }
         }
+
+
     }
 }
