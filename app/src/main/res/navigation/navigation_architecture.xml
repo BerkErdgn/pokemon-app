@@ -53,6 +53,8 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_secondStageFragment_to_detailFragment2"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
     </fragment>
 </navigation>

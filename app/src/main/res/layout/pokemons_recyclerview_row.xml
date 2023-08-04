@@ -16,7 +16,6 @@
             android:id="@+id/pokemonImageView2"
             android:layout_width="wrap_content"
             android:layout_height="120dp"
-
             app:srcCompat="@drawable/pokeball_question" />
 
         <TextView

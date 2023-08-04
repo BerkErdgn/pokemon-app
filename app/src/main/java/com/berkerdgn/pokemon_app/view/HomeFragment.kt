@@ -57,13 +57,17 @@ class HomeFragment : Fragment() {
         viewModel.pokemonList.observe(viewLifecycleOwner, Observer {
             when(it.status){
                 Status.LOADING->{
-
+                    binding.pokemonsRecyclerView.visibility = View.GONE
+                    binding.loadingProgressBar2.visibility = View.VISIBLE
                 }
                 Status.SUCCESS->{
+                    binding.pokemonsRecyclerView.visibility = View.VISIBLE
+                    binding.loadingProgressBar2.visibility = View.GONE
                     pokemonsRecyclerAdapter.pokemons = it.data!!.results
                 }
                 Status.ERROR->{
-
+                    binding.pokemonsRecyclerView.visibility = View.GONE
+                    binding.loadingProgressBar2.visibility = View.VISIBLE
                 }
             }
         })

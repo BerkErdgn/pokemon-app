@@ -2,6 +2,7 @@ package com.berkerdgn.pokemon_app.view
 
 import android.animation.ObjectAnimator
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,8 +11,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.berkerdgn.pokemon_app.R
+import com.berkerdgn.pokemon_app.adapter.AbilityRecyclerAdapter
 import com.berkerdgn.pokemon_app.adapter.StatesRecyclerAdapter
 import com.berkerdgn.pokemon_app.databinding.FragmentDetailBinding
 import com.berkerdgn.pokemon_app.util.Resource
@@ -30,6 +33,7 @@ class DetailFragment @Inject constructor(
     lateinit var viewModel: DetailViewModel
     lateinit var pokemonName : String
     private var statesRecyclerAdapter : StatesRecyclerAdapter = StatesRecyclerAdapter()
+    private var abilityRecyclerAdapter : AbilityRecyclerAdapter = AbilityRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,9 @@ class DetailFragment @Inject constructor(
         binding.statesRecyclerView.adapter = statesRecyclerAdapter
         binding.statesRecyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
 
+        binding.abilityRecyclerView.adapter = abilityRecyclerAdapter
+        binding.abilityRecyclerView.layoutManager = GridLayoutManager(requireContext(),3)
+
         val progressBar =binding.heightProgressBar
             progressBar.max = 10
 
@@ -75,6 +82,15 @@ class DetailFragment @Inject constructor(
 
             when (it.status){
                 Status.SUCCESS->{
+
+                    binding.pokemonImageView.visibility = View.VISIBLE
+                    binding.weightTextView2.visibility = View.VISIBLE
+                    binding.heightTextView2.visibility = View.VISIBLE
+                    binding.weightProgressBar.visibility = View.VISIBLE
+                    binding.heightProgressBar.visibility = View.VISIBLE
+                    binding.loadingProgressBar.visibility = View.GONE
+
+
                     val heightProgressBar =binding.heightProgressBar
                     heightProgressBar.max = 100
 
@@ -90,11 +106,26 @@ class DetailFragment @Inject constructor(
                    glide.load(it.data.sprites.front_default).into(binding.pokemonImageView)
 
                     statesRecyclerAdapter.states = it.data.stats
+
+                    abilityRecyclerAdapter.pokemonAbilities = it.data.abilities
+
                 }
                 Status.ERROR->{
                     println(it.message)
+                    binding.pokemonImageView.visibility = View.GONE
+                    binding.weightTextView2.visibility = View.GONE
+                    binding.heightTextView2.visibility = View.GONE
+                    binding.weightProgressBar.visibility = View.GONE
+                    binding.heightProgressBar.visibility = View.GONE
+                    binding.loadingProgressBar.visibility = View.VISIBLE
                 }
                 Status.LOADING->{
+                    binding.pokemonImageView.visibility = View.GONE
+                    binding.weightTextView2.visibility = View.GONE
+                    binding.heightTextView2.visibility = View.GONE
+                    binding.weightProgressBar.visibility = View.GONE
+                    binding.heightProgressBar.visibility = View.GONE
+                    binding.loadingProgressBar.visibility = View.VISIBLE
 
                 }
             }
