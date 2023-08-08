@@ -1,8 +1,11 @@
 package com.berkerdgn.pokemon_app.dependincyInjection
 
 import android.content.Context
+import androidx.room.Room
 import com.berkerdgn.pokemon_app.R
 import com.berkerdgn.pokemon_app.api.PokemonApi
+import com.berkerdgn.pokemon_app.for_room.room_db.PokemonDao
+import com.berkerdgn.pokemon_app.for_room.room_db.PokemonDataBase
 import com.berkerdgn.pokemon_app.repo.PokemonRepository
 import com.berkerdgn.pokemon_app.repo.PokemonRepositoryImpl
 import com.berkerdgn.pokemon_app.util.Util.BASE_URL
@@ -21,12 +24,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    //for general
     @Singleton
     @Provides
-    fun providePokemonRepository(pokemonApi: PokemonApi):PokemonRepository {
-        return  PokemonRepositoryImpl(pokemonApi = pokemonApi)
+    fun providePokemonRepository(pokemonApi: PokemonApi, pokemonDao: PokemonDao):PokemonRepository {
+        return  PokemonRepositoryImpl(pokemonApi = pokemonApi, pokemonDao = pokemonDao)
     }
 
+    //for api
     @Singleton
     @Provides
     fun providePokemonApi(): PokemonApi{
@@ -39,6 +44,7 @@ object AppModule {
 
 
 
+    //for images
     @Singleton
     @Provides
     fun injectGlide(@ApplicationContext context: Context) = Glide.with(context)
@@ -47,5 +53,20 @@ object AppModule {
                 .error(R.drawable.ic_launcher_foreground)
         )
 
+
+    //for Dao
+
+    @Singleton
+    @Provides
+    fun injectPokemonDataBase(
+        @ApplicationContext context: Context
+    ) = Room.databaseBuilder(
+        context,PokemonDataBase::class.java,"savedPokemons"
+    ).allowMainThreadQueries().build()
+
+
+    @Singleton
+    @Provides
+    fun injectDao(dataBase: PokemonDataBase) = dataBase.pokemonDao()
 
 }
