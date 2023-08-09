@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,8 +19,13 @@ import com.berkerdgn.pokemon_app.R
 import com.berkerdgn.pokemon_app.adapter.AbilityRecyclerAdapter
 import com.berkerdgn.pokemon_app.adapter.StatesRecyclerAdapter
 import com.berkerdgn.pokemon_app.databinding.FragmentDetailBinding
+import com.berkerdgn.pokemon_app.model.for_detail_model.Ability
 import com.berkerdgn.pokemon_app.model.for_detail_model.PokemonDetailModel
+import com.berkerdgn.pokemon_app.model.for_detail_model.Stat
 import com.berkerdgn.pokemon_app.model.room_model.ComparisonAbility
+import com.berkerdgn.pokemon_app.model.room_model.ComparisonAbilityX
+import com.berkerdgn.pokemon_app.model.room_model.ComparisonStat
+import com.berkerdgn.pokemon_app.model.room_model.ComparisonStatX
 import com.berkerdgn.pokemon_app.util.Resource
 import com.berkerdgn.pokemon_app.util.Status
 import com.berkerdgn.pokemon_app.viewmodel.DetailViewModel
@@ -81,7 +87,21 @@ class DetailFragment @Inject constructor(
 
         binding.versusActionButton.setOnClickListener {
             savedViewModel = ViewModelProvider(requireActivity()).get(SavedViewModel::class.java)
-            savedViewModel.savePokemon(savedList.data.abilities,)
+            when(savedList.status){
+                Status.SUCCESS->{
+                    val savedPokemon = savedList.data!!
+                    val comparisonAbilityList: List<ComparisonAbility> = convertAbilityList(savedPokemon.abilities)
+                    val comparisonStatList: List<ComparisonStat> = convertStats(savedPokemon.stats)
+                    savedViewModel.savePokemon(abilities = comparisonAbilityList, id = savedPokemon.id, name = savedPokemon.name, weight = savedPokemon.weight, stats = comparisonStatList, height = savedPokemon.height)
+
+                    Toast.makeText(context,"Successfully Saved!", Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Toast.makeText(context,"Don't Save!", Toast.LENGTH_LONG).show()
+                }
+            }
+
         }
     }
 
@@ -140,6 +160,27 @@ class DetailFragment @Inject constructor(
             }
 
         })
+    }
+
+
+    private fun convertAbilityList(abilityList: List<Ability>): List<ComparisonAbility>{
+        return abilityList.map {
+            ComparisonAbility(
+                ability = ComparisonAbilityX(it.ability.name, it.ability.url),
+                is_hidden = it.is_hidden,
+                slot = it.slot
+            )
+        }
+    }
+
+    private fun convertStats(stateList: List<Stat>): List<ComparisonStat>{
+        return stateList.map {
+            ComparisonStat(
+                base_stat=it.base_stat ,
+                effort=it.effort,
+                stat=ComparisonStatX(it.stat.name,it.stat.url)
+            )
+        }
     }
 
 
