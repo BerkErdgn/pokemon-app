@@ -11,15 +11,19 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.berkerdgn.pokemon_app.R
 import com.berkerdgn.pokemon_app.adapter.AbilityRecyclerAdapter
 import com.berkerdgn.pokemon_app.adapter.StatesRecyclerAdapter
 import com.berkerdgn.pokemon_app.databinding.FragmentDetailBinding
+import com.berkerdgn.pokemon_app.model.for_detail_model.PokemonDetailModel
+import com.berkerdgn.pokemon_app.model.room_model.ComparisonAbility
 import com.berkerdgn.pokemon_app.util.Resource
 import com.berkerdgn.pokemon_app.util.Status
 import com.berkerdgn.pokemon_app.viewmodel.DetailViewModel
+import com.berkerdgn.pokemon_app.viewmodel.SavedViewModel
 import com.bumptech.glide.RequestManager
 import javax.inject.Inject
 
@@ -31,7 +35,9 @@ class DetailFragment @Inject constructor(
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
     lateinit var viewModel: DetailViewModel
+    lateinit var savedViewModel: SavedViewModel
     lateinit var pokemonName : String
+    lateinit var savedList : Resource<PokemonDetailModel>
     private var statesRecyclerAdapter : StatesRecyclerAdapter = StatesRecyclerAdapter()
     private var abilityRecyclerAdapter : AbilityRecyclerAdapter = AbilityRecyclerAdapter()
 
@@ -73,13 +79,16 @@ class DetailFragment @Inject constructor(
 
         observeLiveDataForDetails(pokemonName = pokemonName)
 
-
+        binding.versusActionButton.setOnClickListener {
+            savedViewModel = ViewModelProvider(requireActivity()).get(SavedViewModel::class.java)
+            savedViewModel.savePokemon(savedList.data.abilities,)
+        }
     }
 
     private fun observeLiveDataForDetails(pokemonName : String){
         viewModel.accessibleGetPokemonDetail(pokemonName = pokemonName )
         viewModel.pokemonDetails.observe(viewLifecycleOwner, Observer {
-
+            savedList = it
             when (it.status){
                 Status.SUCCESS->{
 
