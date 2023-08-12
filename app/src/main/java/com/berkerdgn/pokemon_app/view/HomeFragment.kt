@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.berkerdgn.pokemon_app.R
 import com.berkerdgn.pokemon_app.adapter.PokemonsRecyclerAdapter
@@ -47,6 +48,11 @@ class HomeFragment : Fragment() {
 
         binding.pokemonsRecyclerView.adapter = pokemonsRecyclerAdapter
         binding.pokemonsRecyclerView.layoutManager = GridLayoutManager(requireContext(),2)
+
+        binding.versusListFloatingActionButton.setOnClickListener {
+            val action = SecondStageFragmentDirections.actionSecondStageFragmentToComparisonFragment()
+            Navigation.findNavController(view).navigate(action)
+        }
 
         observeLiveDataForPokemons()
 

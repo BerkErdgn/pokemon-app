@@ -56,5 +56,8 @@
             app:destination="@id/detailFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:popExitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_secondStageFragment_to_comparisonFragment"
+            app:destination="@id/comparisonFragment" />
     </fragment>
 </navigation>
