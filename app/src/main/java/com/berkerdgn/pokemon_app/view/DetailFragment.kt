@@ -183,6 +183,9 @@ class DetailFragment @Inject constructor(
         }
     }
 
-
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
 
 }

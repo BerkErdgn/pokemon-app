@@ -23,6 +23,8 @@ import com.berkerdgn.pokemon_app.model.room_model.ComparisonAbility
 import com.berkerdgn.pokemon_app.model.room_model.ComparisonPokemonModel
 import com.berkerdgn.pokemon_app.model.room_model.ComparisonStat
 import com.berkerdgn.pokemon_app.viewmodel.SavedViewModel
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 import kotlin.coroutines.coroutineContext
@@ -32,7 +34,7 @@ class ComparisonAdapter : RecyclerView.Adapter<ComparisonAdapter.ComparisonViewH
 
     private lateinit var mContext: Context
 
-
+    private lateinit var glide : RequestManager
     class ComparisonViewHolder(itemView :View ) : RecyclerView.ViewHolder(itemView)
 
     private val diffUtil = object : DiffUtil.ItemCallback<ComparisonPokemonModel>(){
@@ -72,7 +74,6 @@ class ComparisonAdapter : RecyclerView.Adapter<ComparisonAdapter.ComparisonViewH
     }
 
     override fun onBindViewHolder(holder: ComparisonViewHolder, position: Int) {
-        val comparisonImage = holder.itemView.findViewById<ImageView>(R.id.comparisonPokemonImageView)
 
         val comparisonWeightProgressBar = holder.itemView.findViewById<ProgressBar>(R.id.comparisonWeightProgressBar)
             comparisonWeightProgressBar.max = 100
@@ -98,6 +99,8 @@ class ComparisonAdapter : RecyclerView.Adapter<ComparisonAdapter.ComparisonViewH
         comparisonAbilityRecyclerView.layoutManager = GridLayoutManager(mContext,3)
         abilityRecyclerAdapter.pokemonAbilities = convertAbility(savedPokemons[position].abilities)
 
+       val pokemonNameText = holder.itemView.findViewById<TextView>(R.id.pokemonNameTextView2)
+        pokemonNameText.text = savedPokemons[position].name
 
     }
 
